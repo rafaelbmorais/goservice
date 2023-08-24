@@ -14,3 +14,5 @@ VALUE (
 ); # 123456
 
 SELECT * FROM usuarios;
+
+update usuarios set habilitado = 0 where id in (3, 4);
