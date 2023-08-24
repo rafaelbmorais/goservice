@@ -13,3 +13,4 @@ VALUE (
     1
 ); # 123456
 
+SELECT * FROM usuarios;
