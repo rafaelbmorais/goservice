@@ -27,8 +27,15 @@ public class AdministradorController {
     private ServicoService servicoService;
 
     @GetMapping(value = "/servicos")
-    public String servicos() {
-        return "servicosAdmin";
+    public ModelAndView servicos() {
+        ModelAndView mv = new ModelAndView("servicosAdmin");
+        try {
+            List<Servico> servicos = servicoService.findAll();
+            mv.addObject("servicos", servicos);
+        } catch (Exception ex) {
+            mv.addObject("errorMessage", "Erro ao buscar dados de serviços.");
+        }
+        return mv;
     }
 
     @PostMapping(value = "/servicos")
@@ -44,7 +51,7 @@ public class AdministradorController {
 
     @GetMapping(value = "/usuarios")
     public ModelAndView usuarios() {
-        ModelAndView mv = new ModelAndView("usuariosAdmin"); // ModelAndView é usado para adicionar um objeto no template / na página html.
+        ModelAndView mv = new ModelAndView("usuariosAdmin");
         try {
             List<Usuario> usuarios = usuarioService.findAll();
             mv.addObject("usuarios", usuarios);
@@ -66,7 +73,7 @@ public class AdministradorController {
     }
 
     @PostMapping(value = "/usuarios/disable")
-    public String desableUser(@RequestParam(name = "usuarioId") Long id, RedirectAttributes attributes) {
+    public String disableUser(@RequestParam(name = "usuarioId") Long id, RedirectAttributes attributes) {
         try {
             usuarioService.disableUser(id);
         } catch (UsuarioNaoEncontradoException ex) {
