@@ -15,7 +15,7 @@ VALUE (
 
 SELECT * FROM servicos;
 
-update usuarios set habilitado = 0 where id in (3, 4);
+UPDATE usuarios SET habilitado = 0 WHERE id IN (3, 4);
 
 INSERT INTO servicos (categoria, descricao, nome) 
 VALUES 
@@ -29,3 +29,38 @@ VALUES
     ('Saúde', 'Sessão de fisioterapia para reabilitação', 'Fisioterapia de Reabilitação'),
     ('Desenvolvimento', 'Desenvolvimento de site institucional', 'Desenvolvimento de Site Institucional'),
     ('Design', 'Design de interface de usuário para aplicativos', 'Design de Interface de Aplicativo');
+    
+    SELECT * FROM servicos;
+    SELECT * FROM prestadores_servicos;
+    
+    INSERT INTO prestadores_servicos (servico_id, prestador_id)
+VALUES
+    (1, 4),
+    (1, 5),
+    (3, 4),
+    (3, 5),
+    (4, 4),
+    (4, 5),
+    (5, 4),
+    (5, 5),
+    (6, 4),
+    (6, 5),
+    (7, 4),
+    (7, 5),
+    (8, 4),
+    (8, 5),
+    (9, 4),
+    (9, 5),
+    (10, 4),
+    (10, 5),
+    (11, 4),
+    (11, 5),
+    (12, 4),
+    (12, 5);
+    
+SELECT * 
+FROM servicos AS s 
+JOIN prestadores_servicos AS ps ON s.id = ps.servico_id 
+JOIN usuarios AS u ON u.id = ps.prestador_id 
+WHERE u.id = 5; 
+    
