@@ -32,13 +32,13 @@
             </div>
         </div>
 
-        <div class="card w-100 mt-5" th:if=true> <!-- "${prestadors != null}" -->
+        <div class="card w-100 mt-5" th:if="${prestadores != null}">
 
-            <div class="card-body" th:if=false> <!-- "${#lists.isEmpty(prestadors)}" -->
+            <div class="card-body" th:if="${#lists.isEmpty(prestadores)}">
                 <h5>Nenhum resultado encontrado.</h5>
             </div>
 
-            <div class="card-body" th:unless=false> <!-- "${#lists.isEmpty(prestadors)}" -->
+            <div class="card-body" th:unless="${#lists.isEmpty(prestadores)}">
                 <h5 class="card-title mb-2">Preencha o formulário</h5>
 
                 <div th:if="${successMessage != null}" th:text="${successMessage}" class="alert alert-success" role="alert"></div>
@@ -50,7 +50,7 @@
                         <label class="form-label" for="prestadorId">Prestador<span class="text-danger">*</span></label>
                         <select class="form-select" id="prestadorId" name="prestadorId" required>
                             <option value="" selected disabled>Selecione um prestador</option>
-                            <option th:each="prestador : ${prestadors}" th:value="${prestador?.id}" th:text="${prestador?.nome}"></option>
+                            <option th:each="prestador : ${prestadores}" th:value="${prestador.id}" th:text="${prestador.nome}"></option>
                         </select>
                         <div class="form-text"></div>
                     </div>
@@ -65,7 +65,7 @@
                         <div class="form-text"></div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Agendar<i class="bi bi-calendar-check-fill ms-2"></i></button>
+                    <button type="submit" class="btn btn-primary">Agendar <i class="bi bi-calendar-check-fill ms-2"></i></button>
                 </form>
             </div>
 

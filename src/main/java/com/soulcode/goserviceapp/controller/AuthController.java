@@ -61,11 +61,11 @@ public class AuthController {
             @RequestParam(name = "senhaNova") String senhaNova,
             Authentication authentication,
             RedirectAttributes attributes
-            ) {
+    ) {
         try {
             authService.updatePassword(authentication, senhaAtual, senhaNova);
-            attributes.addFlashAttribute("successMessage", "Senha alterada");
-        } catch (UsuarioNaoAutenticadoException | SenhaIncorretaException | UsuarioNaoEncontradoException ex) {
+            attributes.addFlashAttribute("successMessage", "Senha alterada.");
+        } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException | SenhaIncorretaException ex) {
             attributes.addFlashAttribute("errorMessage", ex.getMessage());
         } catch (Exception ex) {
             attributes.addFlashAttribute("errorMessage", "Erro ao tentar alterar a senha.");

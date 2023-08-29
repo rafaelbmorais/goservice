@@ -14,17 +14,16 @@ import java.util.Optional;
 
 @Service
 public class PrestadorService {
-
     @Autowired
     private PrestadorRepository prestadorRepository;
 
     @Autowired
     private ServicoService servicoService;
 
-    public Prestador findAuthenticated(Authentication authentication) {
-        if(authentication != null && authentication.isAuthenticated()) {
+    public Prestador findAuthenticated(Authentication authentication){
+        if(authentication != null && authentication.isAuthenticated()){
             Optional<Prestador> prestador = prestadorRepository.findByEmail(authentication.getName());
-            if(prestador.isPresent()) {
+            if(prestador.isPresent()){
                 return prestador.get();
             } else {
                 throw new UsuarioNaoEncontradoException();
@@ -33,17 +32,16 @@ public class PrestadorService {
             throw new UsuarioNaoAutenticadoException();
         }
     }
-
-    public Prestador findById(Long id) {
+    public Prestador findById(Long id){
         Optional<Prestador> prestador = prestadorRepository.findById(id);
-        if(prestador.isPresent()) { // isPresent faz parte do Optional
-            return prestador.get(); // o get retorna todos os dados do prestador
-        } else {
-            throw new UsuarioNaoEncontradoException(); // tratamento de erro
+        if(prestador.isPresent()){
+            return prestador.get();
+        }else{
+            throw new UsuarioNaoEncontradoException();
         }
     }
 
-    public Prestador update(Prestador prestador) {
+    public Prestador update(Prestador prestador){
         Prestador updatedPrestador = this.findById(prestador.getId());
         updatedPrestador.setNome(prestador.getNome());
         updatedPrestador.setEmail(prestador.getEmail());
@@ -52,21 +50,21 @@ public class PrestadorService {
         return prestadorRepository.save(updatedPrestador);
     }
 
-    public void addServicoPrestador(Authentication authentication, Long id) {
+    public void addServicoPrestador(Authentication authentication, Long id){
         Prestador prestador = findAuthenticated(authentication);
         Servico servico = servicoService.findById(id);
         prestador.addEspecialidade(servico);
         prestadorRepository.save(prestador);
     }
 
-    public void removeServicoPrestador(Authentication authentication, Long id) {
+    public void removeServicoPrestador(Authentication authentication, Long id){
         Prestador prestador = findAuthenticated(authentication);
         Servico servico = servicoService.findById(id);
         prestador.removeEspecialidade(servico);
         prestadorRepository.save(prestador);
     }
 
-    public List<Prestador> findByServicoId(Long id) {
+    public List<Prestador> findByServicoId(Long id){
         return prestadorRepository.findByServicoId(id);
     }
 }

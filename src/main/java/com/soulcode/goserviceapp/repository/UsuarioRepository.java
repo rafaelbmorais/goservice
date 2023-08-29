@@ -11,10 +11,10 @@ import java.util.Optional;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-    Optional<Usuario> findByEmail(String email); // foi criado aqui porque ele não existe no JpaRepository
+    Optional<Usuario> findByEmail(String email);
 
     @Modifying
-    @Query(value = "UPDATE usuarios AS u SET u.senha = ? WHERE u.email = ?", nativeQuery = true)
+    @Query(value = "UPDATE usuarios u SET u.senha = ? WHERE u.email = ?", nativeQuery = true)
     void updatePasswordByEmail(String senha, String email);
 
     @Modifying
