@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.OptionalInt;
 
 @Service
 public class ClienteService {
@@ -16,10 +17,10 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public Cliente findAuthenticated(Authentication authentication) {
-        if(authentication != null && authentication.isAuthenticated()) {
+    public Cliente findAuthenticated(Authentication authentication){
+        if (authentication != null && authentication.isAuthenticated()){
             Optional<Cliente> cliente = clienteRepository.findByEmail(authentication.getName());
-            if(cliente.isPresent()) {
+            if(cliente.isPresent()){
                 return cliente.get();
             } else {
                 throw new UsuarioNaoEncontradoException();
@@ -29,22 +30,21 @@ public class ClienteService {
         }
     }
 
-    public Cliente findById(Long id) {
+    public Cliente findById(Long id){
         Optional<Cliente> cliente = clienteRepository.findById(id);
-        if(cliente.isPresent()) {
+        if(cliente.isPresent()){
             return cliente.get();
         } else {
-            throw new UsuarioNaoEncontradoException();
+            throw  new UsuarioNaoEncontradoException();
         }
     }
-
     public Cliente update(Cliente cliente) {
         Cliente updatedCliente = this.findById(cliente.getId());
         updatedCliente.setNome(cliente.getNome());
-        updatedCliente.setCpf(cliente.getCpf());
-        updatedCliente.setTelefone(cliente.getTelefone());
-        updatedCliente.setDataNascimento(cliente.getDataNascimento());
         updatedCliente.setEmail(cliente.getEmail());
+        updatedCliente.setTelefone(cliente.getTelefone());
+        updatedCliente.setCpf(cliente.getCpf());
+        updatedCliente.setDataNascimento(cliente.getDataNascimento());
         return clienteRepository.save(updatedCliente);
     }
 }

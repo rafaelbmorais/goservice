@@ -6,14 +6,13 @@ import com.soulcode.goserviceapp.repository.UsuarioRepository;
 import com.soulcode.goserviceapp.service.exceptions.SenhaIncorretaException;
 import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoAutenticadoException;
 import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoEncontradoException;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-
 
 @Service
 public class AuthService {
@@ -24,7 +23,7 @@ public class AuthService {
     @Autowired
     private PasswordEncoder encoder;
 
-    public Cliente createCliente(Cliente cliente) {
+    public Cliente createCliente(Cliente cliente){
         String passwordEncoded = encoder.encode(cliente.getSenha());
         cliente.setSenha(passwordEncoded);
         cliente.setId(null);
@@ -32,7 +31,7 @@ public class AuthService {
     }
 
     @Transactional
-    public void updatePassword(Authentication authentication, String senhaAtual, String senhaNova) {
+    public void updatePassword(Authentication authentication, String senhaAtual, String senhaNova){
         if(authentication != null && authentication.isAuthenticated()) {
             String emailAuthenticated = authentication.getName();
             Optional<Usuario> usuario = usuarioRepository.findByEmail(emailAuthenticated);
@@ -40,7 +39,7 @@ public class AuthService {
                 String passwordEncoded = usuario.get().getSenha();
                 boolean passwordVerified = encoder.matches(senhaAtual, passwordEncoded);
                 if(passwordVerified) {
-                    String passwordEncodedNew = encoder.encode(senhaNova); // ocorre a atualização da senha
+                    String passwordEncodedNew = encoder.encode(senhaNova);
                     usuarioRepository.updatePasswordByEmail(passwordEncodedNew, emailAuthenticated);
                     return;
                 }

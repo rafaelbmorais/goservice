@@ -58,7 +58,7 @@ public class AdministradorController {
         return "redirect:/admin/servicos";
     }
 
-    @GetMapping(value = "/servicos/editar/{id}") // busca os dados do serviço pelo id
+    @GetMapping(value = "/servicos/editar/{id}")
     public ModelAndView editService(@PathVariable Long id) {
         ModelAndView mv = new ModelAndView("editarServico");
         try {
@@ -72,17 +72,16 @@ public class AdministradorController {
         return mv;
     }
 
-    @PostMapping(value = "/servicos/editar") // não precisa da rota dinâmica porque as informações vem do formulário
+    @PostMapping(value = "/servicos/editar")
     public String updateService(Servico servico, RedirectAttributes attributes) {
         try {
             servicoService.update(servico);
-            attributes.addFlashAttribute("successMessage", "Dados do serviço alterados");
+            attributes.addFlashAttribute("successMessage", "Dados do serviço alterados.");
         } catch (ServicoNaoEncontradoException ex) {
             attributes.addFlashAttribute("errorMessage", ex.getMessage());
         } catch (Exception ex) {
             attributes.addFlashAttribute("errorMessage", "Erro ao alterar dados do serviço.");
         }
-
         return "redirect:/admin/servicos";
     }
 

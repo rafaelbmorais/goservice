@@ -24,7 +24,7 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .requestMatchers(PUBLIC_ROUTES)
                 .permitAll()
-                .requestMatchers("/admin/**").hasAnyRole("ADMIN")
+                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/prestador/**").hasAnyRole("PRESTADOR", "ADMIN")
                 .requestMatchers("/cliente/**").hasAnyRole("CLIENTE", "ADMIN")
                 .anyRequest()
